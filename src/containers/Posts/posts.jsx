@@ -1,5 +1,6 @@
  import React, { Component } from 'react';
  import { connect } from 'react-redux';
+ import { Link } from 'react-router-dom'
  import { fetchPosts } from './PostsActions'
  import {
    LinkButton,
@@ -24,7 +25,7 @@ class _Posts extends Component {
   renderPost = post =>
       <ListGroupItem
         key={post.id}
-        item={post.title}
+        item={<Link to={`/posts/${post.id}`}>{post.title}</Link>}
         className="list-group-item"
       />
 

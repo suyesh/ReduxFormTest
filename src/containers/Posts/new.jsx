@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 import {
   composeValidators,
@@ -8,10 +9,13 @@ import {
 } from 'revalidate';
 import { Link } from 'react-router-dom'
 import { Container, FormField, Button} from '../../components'
+import { createPost } from './PostsActions'
 
 class _NewPost extends Component {
   onSubmit = (values) => {
-    console.log(values)
+    this.props.createPost(values, () => {
+      this.props.history.push('/')
+    })
   }
 
   render(){
@@ -59,9 +63,13 @@ const validate = combineValidators({
   )()
 })
 
+const actions = {
+  createPost
+}
+
 const NewPost = reduxForm({
   validate,
   form: 'PostsNewForm'
-})(_NewPost)
+})(connect(null, actions)(_NewPost));
 
 export { NewPost }
